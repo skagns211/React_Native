@@ -6,9 +6,9 @@ import { Dimensions, StyleSheet, View, Text, ScrollView } from "react-native";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function App() {
+  const [city, setCity] = useState("Loading...");
   const [location, setLocation] = useState();
   const [ok, setOk] = useState(true);
-  console.log(ok);
   console.log(ok);
   const ask = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
@@ -22,7 +22,7 @@ export default function App() {
       { latitude, longitude },
       { useGoogleMaps: false }
     );
-    console.log(location);
+    setCity(location[0].city);
   };
   useEffect(() => {
     ask();
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.city}>
-        <Text style={styles.cityName}>Seoul</Text>
+        <Text style={styles.cityName}>{city}</Text>
       </View>
       <ScrollView
         showsHorizontalScrollIndicator={false}
