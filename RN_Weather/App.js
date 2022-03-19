@@ -46,18 +46,6 @@ export default function App() {
           <Text style={styles.temp}>27</Text>
           <Text style={styles.desc}>Sunny</Text>
         </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.desc}>Sunny</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.desc}>Sunny</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.desc}>Sunny</Text>
-        </View>
       </ScrollView>
       <StatusBar style="light"></StatusBar>
     </View>
