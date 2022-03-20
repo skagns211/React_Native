@@ -9,7 +9,7 @@ export default function App() {
   const [city, setCity] = useState("Loading...");
   const [location, setLocation] = useState();
   const [ok, setOk] = useState(true);
-  console.log(ok);
+
   const ask = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
     if (!granted) {
@@ -22,7 +22,7 @@ export default function App() {
       { latitude, longitude },
       { useGoogleMaps: false }
     );
-    setCity(location[0].city);
+    setCity(`${location[0].city}, ${location[0].district}`);
   };
   useEffect(() => {
     ask();
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cityName: {
-    fontSize: 68,
+    fontSize: 55,
     fontWeight: "500",
   },
   weather: {},
