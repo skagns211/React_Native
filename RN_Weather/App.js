@@ -1,7 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { Dimensions, StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const API_KEY = "78741ceb08bbd6332e7f3a0daacd8fa0";
@@ -25,10 +32,11 @@ export default function App() {
     );
     setCity(`${location[0].city}, ${location[0].district}`);
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
     );
     const json = await response.json();
-    console.log(json);
+    setDays(json.daily);
+    console.log(days);
   };
   useEffect(() => {
     ask();
@@ -44,14 +52,24 @@ export default function App() {
         contentContainerStyle={styles.weather}
         horizontal
       >
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.desc}>Sunny</Text>
-        </View>
-        <View style={styles.day}>
-          <Text style={styles.temp}>27</Text>
-          <Text style={styles.desc}>Sunny</Text>
-        </View>
+        {days.length === 0 ? (
+          <View style={styles.day}>
+            <ActivityIndicator
+              color="white"
+              size="large"
+              style={{ marginTop: 10 }}
+            />
+          </View>
+        ) : (
+          days.map((el, idx) => (
+            <View key={idx} style={styles.day}>
+              <Text style={styles.temp}>
+                {parseFloat(el.temp.day).toFixed(1)}
+              </Text>
+              <Text style={styles.desc}>{el.weather[0].main}</Text>
+            </View>
+          ))
+        )}
       </ScrollView>
       <StatusBar style="light"></StatusBar>
     </View>
